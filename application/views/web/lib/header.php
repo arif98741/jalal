@@ -33,25 +33,22 @@
                         </div>
                         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                             <ul id="main-menu" class="nav navbar-nav">
-                                <li class="hvr-underline-from-left"> <a title="Home" href="<?php echo base_url(); ?>/"><i class="fa fa-home"></i>&nbsp;Home</a> </li>
-                                <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog">Blog</a> </li>
+                                <li class="hvr-underline-from-left"> <a title="Home" href="<?php echo base_url(); ?>"><i class="fa fa-home"></i>&nbsp;Home</a> </li>
+
                                 <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>project">Project</a> </li>
-
-                                <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>upload"><i class="fa fa-upload"></i>&nbsp;Upload</a> </li>
-
                                 
                                 <?php if($this->session->userdata('student') ): ?>
                                     <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student/profile/<?php echo $this->session->student_username; ?>">Profile</a> </li>
 
-                                     <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student/logout"><i class="fa fa-user"></i>&nbsp;Logout</a> </li>
+                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student/logout"><i class="fa fa-user"></i>&nbsp;Logout</a> </li>
 
                                     <?php else: ?>
 
                                         <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student"><i class="fa fa-user"></i>&nbsp;Student</a> </li>
 
                                     <?php endif; ?>
-
-
+                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog"><i class="fa fa-newspaper-o"></i>&nbsp;Blog</a> </li>
+                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>upload"><i class="fa fa-upload"></i>&nbsp;Upload</a> </li>
                                 </ul>
                             </div>
                         </nav>

@@ -31,7 +31,11 @@ $route['upload'] 		   = 'web/student/upload';
 ! 	Public Project
 !---------------------------------------------------
 */
-$route['project/(:num)'] 	= 'project/index/$1'; 
+$route['project/(:num)'] 		= 'project/index/$1'; 
+$route['project/view/(:any)'] 	= 'project/view/$1'; 
+$route['blog/(:num)'] 			= 'front/blog/$1';
+$route['blog/view/(:any)'] 		= 'front/blog_view/$1'; 
+
 
 
 $route['translate_uri_dashes'] 	= FALSE;

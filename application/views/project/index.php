@@ -41,7 +41,7 @@
                                     <td><?php echo date('d-m-Y',strtotime( $project->created_at)); ?></td>
 
                                     <td><?php echo $project->page_count; ?></td>
-                                    <td><a href="#" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a></td>
+                                    <td><a href="#" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a>&nbsp;&nbsp; <a href="<?php echo base_url().'project/view/'.$project->project_id; ?>" class="btn btn-sm btn-primary text-center"><i class="fa fa-eye "></i></a></td>
                                 </tr>
                                 <?php  $i++; } ?>
 

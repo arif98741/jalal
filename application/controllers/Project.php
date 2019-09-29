@@ -49,7 +49,7 @@ class Project extends CI_Controller
         $data['pages']  = (int)$total_no_of_pages;
         $data['previous_page']  = $previous_page;
         $data['next_page']      = $next_page;
-       
+
         $this->load->view('web/lib/header',$data);
         $this->load->view('project/index');
         $this->load->view('web/lib/footer');
@@ -74,6 +74,35 @@ class Project extends CI_Controller
             $data['profile'] = $status->row();
             $this->load->view('web/lib/header');
             $this->load->view('web/student/profile');
+            $this->load->view('web/lib/footer');
+            
+        }else{
+
+            redirect('error404');
+        }
+
+    }
+
+    /*
+     !--------------------------------------------------------
+     !      Student Profile
+     !--------------------------------------------------------
+     */
+     public function view($project_id="")
+     {
+        $this->db->select('projects.*,project_categories.category_name,students.name,students.username');
+        $this->db->join('project_categories','projects.project_category_id = project_categories.id');
+        $this->db->join('students','projects.author = students.id');
+        $this->db->where(['project_id' => $project_id]);
+        $status = $this->db->order_by('projects.id','desc')->get('projects');
+
+        if ($status->result_id->num_rows > 0) {
+            $data['project'] = $status->row();
+
+            $this->db->set('page_count',$data['project']->page_count+1);
+            $this->db->where('project_id',$project_id)->update('projects');
+            $this->load->view('web/lib/header',$data);
+            $this->load->view('project/project_details');
             $this->load->view('web/lib/footer');
             
         }else{

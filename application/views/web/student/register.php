@@ -3,9 +3,7 @@
 <div class="container category_section" style="padding:40px 15px">
     <div class="row">
         <div class="col-md-12">
-            <br>
-            <h3>Student Registration</h3>
-            <hr>
+
             <!-- home page thum -->
             <style>
                 .thum-post-list {
@@ -46,7 +44,7 @@
                 }
             </style>
             <div class="row">
-                <div class="col-md-offset-3 col-md-6">
+                <div class="col-md-offset-3 col-md-7">
                     <!--widget-->
                     <div class="dash_widget_1 dwc3">
                         <div class="icon"> <i class="fa fa-user fa-3x"></i> 
@@ -55,25 +53,41 @@
                        </div>
                        <div class="divider"></div>
 
-                       <div class="content"> <a href="#"><h2><i class="fa fa-lock"></i>&nbsp;Student Login</h2></a>
-
+                       <div class="content"> <a href="#"><h2><i class="fa fa-user-plus"></i>&nbsp;Student Registration</h2></a>
 
                         <!-- home page thum -->
-                        <?php echo form_open_multipart('web/student/login', array('class'=>'forms-sample')); ?>
+                        <?php echo form_open_multipart('web/student/register_action', array('class'=>'forms-sample')); ?>
                         <label for="">Student ID</label>
-                        <input type="text" name="student_id" class="form-control" placeholder="Enter your student id here">
+                        <input type="text" name="student_id" class="form-control" placeholder="Enter your student id here" required="">
+                        <?php if($this->session->student_id): ?>
+                            <p style="color: red;"><?php echo $this->session->student_id;  ?></p>
+                        <?php  endif; ?>
 
-                        <label for="">Password</label>
-                        <input type="text" name="password" class="form-control" placeholder="Enter your password">
+                        <br><label for="">Name</label>
+                        <input type="text" name="name" class="form-control" <?php if($this->session->name): ?> value="<?php echo $this->session->name; ?>" <?php endif; ?> placeholder="Enter your name here" required=""><br>
+
+                        <label for="">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Enter username" required="">
+
+                        <?php if($this->session->username): ?>
+                            <p style="color: red;"><?php echo $this->session->username;  ?></p>
+                        <?php  endif; ?>
+
+
+                        <br><label for="">Password</label>
+                        <input type="text" name="password" class="form-control" placeholder="Enter your password" required="">
 
                         <?php 
                         if ($this->session->error) { ?>
                             <p class="" style="color: red;"><?php echo $this->session->error; ?></p>
                         <?php } ?>
 
+                       <?php if($this->session->password): ?>
+                            <p style="color: red;"><?php echo $this->session->password;  ?></p>
+                        <?php  endif; ?>
 
                         <br>
-                        <button type="submit" name="login" class="btn btn-success">Login</button>
+                        <button type="submit" name="login" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Register</button>
 
                     </form>
 

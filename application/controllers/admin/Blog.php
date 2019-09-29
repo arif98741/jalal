@@ -65,9 +65,7 @@ class Blog extends CI_Controller
         $this->db->order_by('category_title','asc');
         $data['categories'] = $this->db->get('tbl_blog_category')->result_object(); 
 
-        $this->db->order_by('tag_name','asc');
-        $data['tags'] = $this->db->get('tbl_tag')->result_object(); 
-
+    
         $this->load->view('admin/lib/header',$data);
         $this->load->view('admin/lib/sidebar');
         $this->load->view('admin/blog/add_blog');
