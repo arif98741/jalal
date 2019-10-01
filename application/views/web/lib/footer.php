@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <h3> Go Hre </h3>
+                <h3> Go Here </h3>
                 <!-- Youtube-->
 
                 
@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-3">
                 <!-- Facebook like-->
-                <h3>Second SEction</h3>
+                <h3>Second Section</h3>
                 
                 <!-- Facebook like-->
             </div>

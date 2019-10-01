@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <br>
-            <h3>Blog</h3>
+            <h3>Blog > <?php echo $category->category_title; ?></h3>
             <hr>
             <!-- home page thum -->
             <style>

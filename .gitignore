@@ -12,8 +12,10 @@ npm-debug.log
 yarn-error.log
 .phpintel
 application/logs
+system/cache/
 works
 *.zip
 *.tmp
 *.iml
+uploads
 

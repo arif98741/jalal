@@ -35,6 +35,7 @@ class Project extends CI_Controller
         $this->db->select("projects.*,project_categories.category_name,students.name,students.username");
         $this->db->join('project_categories','project_categories.id = projects.project_category_id');
         $this->db->join('students','projects.author = students.id');
+        $this->db->where('projects.status','published');
         $this->db->order_by('projects.id','desc');
         $this->db->limit($perpage,$offset);
         $query          = $this->db->get('projects');

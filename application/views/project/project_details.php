@@ -127,7 +127,7 @@ body {
       <p class="alert alert-success"><?php echo $this->session->success;  ?></p>
     <?php  endif; ?>
     <div class="profile-content">
-     
+
       <h1 class="text-center"><?php echo $project->project_title; ?>
       <hr>
       <span style="font-size: 18px; ">Author: <a href="<?php echo base_url(); ?>student/profile/<?php echo $project->username; ?>"> <?php echo $project->name; ?></a></span>
@@ -176,19 +176,30 @@ body {
 
     </div>
 
-    <div class="col-md-6">
-      <h2 class="text-left">Donwload</h2>
+    <?php if($this->session->student): ?>
+      <div class="col-md-6">
+        <h2 class="text-left">Donwload</h2>
 
-      <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->report; ?>" class="btn btn-primary">Download Report</a>
-      <br>
-      <br>
-      <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->zip_file; ?>" class="btn btn-success">Download Project File</a>
+        <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->report; ?>" class="btn btn-primary">Download Report</a>
+        <br>
+        <br>
+        <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->zip_file; ?>" class="btn btn-success">Download Project File</a>
+      </div>
+
+      <?php else: ?>
+
+        <div class="col-md-6" id="download-file">
+          <h2 class="text-left">Donwload</h2>
+
+          <a href="#" class="btn btn-primary" onclick="alert('You must have to login for downloading file.')">Download Report</a>
+          <br>
+          <br>
+          <a href="#download-file"  onclick="alert('You must have to login for downloading file.')" class="btn btn-success">Download Project File</a>
+        </div>
+
+      <?php endif; ?>
     </div>
-
   </div>
-
-
-</div>
 </div>
 
 <!--#category-->

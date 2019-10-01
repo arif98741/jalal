@@ -41,7 +41,16 @@
                                     <td><?php echo date('d-m-Y',strtotime( $project->created_at)); ?></td>
 
                                     <td><?php echo $project->page_count; ?></td>
-                                    <td><a href="#" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a>&nbsp;&nbsp; <a href="<?php echo base_url().'project/view/'.$project->project_id; ?>" class="btn btn-sm btn-primary text-center"><i class="fa fa-eye "></i></a></td>
+                                    <td>
+                                        <?php if($this->session->student): ?>
+
+                                        <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id.'/'.$project->zip_file; ?>" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a>&nbsp;&nbsp; 
+                                        <?php else: ?>
+
+                                            <a href="#" title="Login first to download files" class="btn btn-sm btn-success text-center" onclick="alert('You must have to login for downloading file.')"><i class="fa fa-download "></i></a>&nbsp;&nbsp; 
+                                        <?php endif; ?>
+
+                                        <a href="<?php echo base_url().'project/view/'.$project->project_id; ?>" class="btn btn-sm btn-primary text-center"><i class="fa fa-eye "></i></a></td>
                                 </tr>
                                 <?php  $i++; } ?>
 

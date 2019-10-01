@@ -121,7 +121,7 @@ body {
 
  <div class="row profile">
 
-  <div class="col-md-12">
+  <div class="col-md-9">
     <?php if($this->session->success): ?>
 
       <p class="alert alert-success"><?php echo $this->session->success;  ?></p>
@@ -130,11 +130,11 @@ body {
 
       <h1 class="text-center"><?php echo$blog->blog_title; ?>
       <hr>
-
+      <span style="font-size: 18px;">Blog Category: <?php echo$blog->category_title; ?></span>
       <hr>
 
 
-      <span style="font-size: 16px;">Posted on: <?php echo date('d-m-Y',strtotime($blog->create)); ?></span>
+      <span style="font-size: 16px;">Posted on: <?php echo date('M,d -Y',strtotime($blog->create)); ?></span>
 
 
     </h1>
@@ -149,29 +149,27 @@ body {
     <div class="col-md-6">
 
       <h2 class="text-left">Thumbnail</h2>
-      <img src="<?php echo base_url();?>uploads/project/<?php echo$blog->project_id; ?>/<?php echo$blog->thumbnail; ?>" class="img img-thumbnail" alt="">
+      <img src="<?php echo base_url();?>uploads/blog/fullwidth/<?php echo $blog->blog_attachment; ?>/" class="img img-thumbnail" alt="">
 
     </div>
 
-    <div class="col-md-6">
 
-      <h2 class="text-left">Flowchart</h2>
-      <img src="<?php echo base_url();?>uploads/project/<?php echo$blog->project_id; ?>/<?php echo$blog->flowchart; ?>" class="img img-thumbnail" alt="">
-
-    </div>
-
-    <div class="col-md-6">
-      <h2 class="text-left">Donwload</h2>
-
-      <a href="<?php echo base_url();?>uploads/project/<?php echo$blog->project_id; ?>/<?php echo$blog->report; ?>" class="btn btn-primary">Download Report</a>
-      <br>
-      <br>
-      <a href="<?php echo base_url();?>uploads/project/<?php echo$blog->project_id; ?>/<?php echo$blog->zip_file; ?>" class="btn btn-success">Download Project File</a>
-    </div>
 
   </div>
 
 
+</div>
+<div class="col-md-3 profile-content">
+  <ul>
+    Categories <hr>
+    <?php foreach ($categories as $category ) { ?>
+
+
+      <li><a href="<?php echo base_url();?>blog/category/<?php echo $category->tbcid; ?>"><?php echo $category->category_title; ?></a></li>
+    <?php    } ?>
+    
+
+  </ul>
 </div>
 </div>
 

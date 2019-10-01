@@ -68,6 +68,7 @@ class Student extends CI_Controller
             'student_email'        => $data->email,
             'student_address'      => $data->address,
             'student_status'       => $data->status,
+            'student_image'        => $data->image
         );
            $this->session->set_userdata($session);
            $this->session->set_flashdata('success', 'Successfully Loggedin');
@@ -186,12 +187,7 @@ class Student extends CI_Controller
         if (!file_exists('uploads/project/'.$data['project_id'])) {
             mkdir('./uploads/project/'.$data['project_id'], 0777, TRUE);
         }
-
-        
-        $this->upload_report($data['project_id']);
-        $this->upload_thumbnail($data['project_id']);
-        $this->upload_zip($data['project_id']);
-        $this->upload_flowchart($data['project_id']);
+        redirect(base_url().'student/profile/'.$this->session->student_username,'refresh');
 
     }
 
@@ -365,7 +361,41 @@ class Student extends CI_Controller
         }
     }
 
-    
+
+
+    /*
+    !--------------------------------------------------------
+    !     Upload prifle pic
+    !--------------------------------------------------------
+     */
+public function upload_profile_pic()
+    {
+        $file   = $this->db->where(['id'=>$this->session->student_id])->get('students')->row();
+        if (!empty($_FILES['image']['name'])) {
+
+            if (file_exists("./uploads/student/".$file->image)) {
+                unlink("./uploads/student/".$file->image);
+            }
+
+            $config['upload_path'] = './uploads/student/';
+            $config['allowed_types'] = 'jpg|JPG|JPEG|jpeg|PNG|png';
+            $config['file_name'] = time();
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('image')) {
+                $upload_data = array('upload_data' => $this->upload->data());
+                $image = $upload_data['upload_data']['file_name'];
+                $this->db->set(['image'=>$image]);
+                $this->db->where('id',$this->session->student_id);
+                $this->db->update('students');   
+                $this->session->set_userdata(['student_image'=> $image]);
+            } 
+        }
+
+        redirect(base_url().'student/profile/'.$this->session->student_username,'refresh');
+    }
+
+
 
      /*
      !--------------------------------------------------------

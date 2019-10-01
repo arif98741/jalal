@@ -29,10 +29,8 @@ class Front extends CI_Controller
 
         $this->db->select('projects.*,project_categories.category_name');
         $this->db->join('project_categories','projects.project_category_id = project_categories.id');
+        $this->db->where('status','published');
         $data['projects'] = $this->db->order_by('projects.id','desc')->get('projects')->result_object();
-        //echo '<pre>';
-        //print_r($data['projects']); exit;
-
 
         $this->load->view('web/lib/header',$data);
         $this->load->view('web/lib/hero',$data);
@@ -81,7 +79,7 @@ class Front extends CI_Controller
         $data['title'] = 'Blog';
 
         $row  = $this->db->get('tbl_blog')->num_rows();
-        $perpage = 2;
+        $perpage = 15;
         $offset = ($page_id-1) * $perpage;
         $previous_page      = $page_id - 1;
         $next_page          = $page_id + 1;
@@ -91,8 +89,54 @@ class Front extends CI_Controller
         $this->db->order_by('tbl_blog.blog_id','desc');
         $this->db->limit($perpage,$offset);
         $query          = $this->db->get('tbl_blog');
+        //echo '<pre>';
+        //print_r($query); exit;
 
-        
+
+        if ($query->num_rows() > 0) {
+
+            $data['blogs']  = $query->result(); 
+            $data['row']    = $row;
+            $data['page']   = $page_id;
+            $data['pages']  = (int)$total_no_of_pages;
+            $data['previous_page']  = $previous_page;
+            $data['next_page']      = $next_page;
+            $data['categories'] = $this->db->get('tbl_blog_category')->result_object();
+           
+            $this->load->view('web/lib/header',$data);
+            $this->load->view('web/blog');
+            $this->load->view('web/lib/footer');
+        }else{
+          //  redirect('/','refresh');
+        }
+    }
+
+
+    /*
+    !--------------------------------------------------------
+    !       Blog View @id
+    !--------------------------------------------------------
+    */
+    public function blog_bycategory($category_id,$page_id=1)
+    {
+        $data['title'] = 'Blog';
+
+        $data['category']  = $this->db->where('tbcid',$category_id)->get('tbl_blog_category')->row();
+        $row  = $this->db->get('tbl_blog')->num_rows();
+        $perpage = 5;
+        $offset = ($page_id-1) * $perpage;
+        $previous_page      = $page_id - 1;
+        $next_page          = $page_id + 1;
+        $total_no_of_pages  = ceil($row / $perpage);
+        $this->db->select("tbl_blog.*,tbl_blog_category.category_title");
+        $this->db->join('tbl_blog_category','tbl_blog_category.tbcid=tbl_blog.tbcid');
+        $this->db->order_by('tbl_blog.blog_id','desc');
+        $this->db->limit($perpage,$offset);
+        $query          = $this->db->get('tbl_blog');
+        //echo '<pre>';
+        //print_r($query); exit;
+
+
         if ($query->num_rows() > 0) {
 
             $data['blogs']  = $query->result(); 
@@ -103,12 +147,15 @@ class Front extends CI_Controller
             $data['next_page']      = $next_page;
            
             $this->load->view('web/lib/header',$data);
-            $this->load->view('blog/index');
+            $this->load->view('blog/blog_category');
             $this->load->view('web/lib/footer');
         }else{
           //  redirect('/','refresh');
         }
     }
+
+
+    
 
      /*
     !--------------------------------------------------------
@@ -127,6 +174,7 @@ class Front extends CI_Controller
         if ($query->num_rows() > 0) {
 
             $data['blog']  = $query->row(); 
+            $data['categories'] = $this->db->get('tbl_blog_category')->result_object();
            
             $this->load->view('web/lib/header',$data);
             $this->load->view('blog/blog_details');

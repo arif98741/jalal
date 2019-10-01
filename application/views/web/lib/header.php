@@ -35,19 +35,19 @@
                             <ul id="main-menu" class="nav navbar-nav">
                                 <li class="hvr-underline-from-left"> <a title="Home" href="<?php echo base_url(); ?>"><i class="fa fa-home"></i>&nbsp;Home</a> </li>
 
-                                <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>project">Project</a> </li>
+                                <li class="hvr-underline-from-left"> <a title="Project" href="<?php echo base_url(); ?>project">Project</a> </li>
                                 
                                 <?php if($this->session->userdata('student') ): ?>
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student/profile/<?php echo $this->session->student_username; ?>">Profile</a> </li>
+                                    <li class="hvr-underline-from-left"> <a title="Profile" href="<?php echo base_url(); ?>student/profile/<?php echo $this->session->student_username; ?>">Profile</a> </li>
 
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student/logout"><i class="fa fa-user"></i>&nbsp;Logout</a> </li>
+                                    <li class="hvr-underline-from-left"> <a title="Logout" href="<?php echo base_url(); ?>student/logout"><i class="fa fa-user"></i>&nbsp;Logout</a> </li>
 
                                     <?php else: ?>
 
-                                        <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>student"><i class="fa fa-user"></i>&nbsp;Student</a> </li>
+                                        <li class="hvr-underline-from-left"> <a title="Student" href="<?php echo base_url(); ?>student"><i class="fa fa-user"></i>&nbsp;Student</a> </li>
 
                                     <?php endif; ?>
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog"><i class="fa fa-newspaper-o"></i>&nbsp;Blog</a> </li>
+                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog/1"><i class="fa fa-newspaper-o"></i>&nbsp;Blog</a> </li>
                                     <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>upload"><i class="fa fa-upload"></i>&nbsp;Upload</a> </li>
                                 </ul>
                             </div>
@@ -59,7 +59,7 @@
                             <div class="input-group">
                                 <input autocomplete="off" name="query" required="required" type="text" class="form-control" placeholder="Search Here">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"> <i class="glyphicon glyphicon-search"></i> </button>
+                                    <button class="btn btn-default" type="submit"> <i class="fa fa-search"></i> </button>
                                 </div>
                             </div>
                         </form>
