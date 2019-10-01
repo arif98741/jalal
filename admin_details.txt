@@ -1,8 +1,8 @@
 
 'hostname' => localhost
-'username' => phpdark_site
-'password' => @PHP@dark#2019
-'database' => phpdark_phpdark
+'username' => phpdark_jalal
+'password' => explore@#%$
+'database' => phpdark_jalal
 'dbdriver' => mysqli
 
 
