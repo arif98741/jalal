@@ -163,6 +163,22 @@ body {
 
     <div class="col-md-6">
       <div class="form-group">
+        <label for="">Department</label>
+        <select name="department_id"  class="form-control">
+          <option value="" disabled="" selected="">Select Department</option>
+          <?php foreach($departments as $department){?>
+            <option value="<?php echo $department->id; ?>"><?php echo $department->department_name; ?></option>
+
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-md-6">
+      <div class="form-group">
         <label for="">Project Category</label>
         <select name="project_category_id"  class="form-control">
           <option value="" disabled="" selected="">Select Category</option>
@@ -174,6 +190,31 @@ body {
       </div>
     </div>
 
+     <div class="col-md-6">
+      <div class="form-group">
+        <label for="">Semester</label>
+        <select name="semester"  class="form-control">
+          <option value="" disabled="" selected="">Select Semester</option>
+          
+            <option value="1st Semester" >1st Semester</option>
+            <option value="2nd Semester" >2nd Semester</option>
+            <option value="3rd Semester" >3rd Semester</option>
+            <option value="4th Semester" >4th Semester</option>
+            <option value="5th Semester" >5th Semester</option>
+            <option value="6th Semester" >6th Semester</option>
+            <option value="7th Semester" >7th Semester</option>
+            <option value="8th Semester" >8th Semester</option>
+            <option value="9th Semester" >9th Semester</option>
+            <option value="10th Semester" >10th Semester</option>
+            <option value="11th Semester" >11th Semester</option>
+            <option value="12th Semester" >12th Semester</option>
+         
+        </select>
+      </div>
+    </div>
+
+    
+
     <div class="col-md-6">
       <div class="form-group">
         <label for="">Project Upload by</label>
@@ -184,7 +225,7 @@ body {
       </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="form-group">
         <label for="">Actors</label>
         <input type="text" name="actors" placeholder="Enter actors name" class="form-control">
@@ -223,7 +264,7 @@ body {
 
     </div>
 
-  
+
     <div class="col-md-12">
       <div class="form-group">
         <label for="">Requirment Analysis</label>

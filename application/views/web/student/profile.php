@@ -1,7 +1,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <!--category-->
-<div class="container category_section" style="padding:20px 15px">
+<div class="container" style="padding:20px 15px">
 
   <style>
         /***
@@ -117,6 +118,7 @@ body {
   background: #fff;
   min-height: 460px;
 }
+
 </style>
 <div class="row">
 
@@ -164,10 +166,14 @@ body {
         </div>
         <!-- END SIDEBAR USER TITLE -->
         <!-- SIDEBAR BUTTONS -->
-        <div class="profile-userbuttons">
+
+
+        <!-- <div class="profile-userbuttons">
           <button type="button" class="btn btn-success btn-sm">Follow</button>
           <button type="button" class="btn btn-danger btn-sm">Message</button>
-        </div>
+        </div> -->
+
+
         <!-- END SIDEBAR BUTTONS -->
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu">
@@ -179,7 +185,7 @@ body {
             </li>
             <?php if($this->session->student) : ?>
               <li>
-                <a href="#">
+                <a href="<?php echo base_url();?>student/account_settings">
                   <i class="fa fa-cog"></i>
                 Account Settings </a>
               </li>
@@ -189,6 +195,14 @@ body {
                   <i class="fa fa-upload"></i>
                 Upload Project </a>
               </li>
+
+               <li>
+                <a href="<?php echo base_url();?>web/student/logout">
+                  <i class="fa fa-sign-out"></i>
+                Logout </a>
+              </li>
+
+              
 
           <!-- 
           <li>

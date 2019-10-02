@@ -32,6 +32,12 @@ class Front extends CI_Controller
         $this->db->where('status','published');
         $data['projects'] = $this->db->order_by('projects.id','desc')->get('projects')->result_object();
 
+        $data['total_project'] = $this->db->get('projects')->num_rows();
+        $data['total_author'] = $this->db->get('students')->num_rows();
+        $data['total_download'] = $this->db->get('students')->num_rows();
+
+        
+
         $this->load->view('web/lib/header',$data);
         $this->load->view('web/lib/hero',$data);
         $this->load->view('web/home');
@@ -264,4 +270,28 @@ class Front extends CI_Controller
             redirect('/');
         }
     } 
+
+
+
+    /*
+    !--------------------------------------------------------
+    !       Post View @id
+    !--------------------------------------------------------
+    */
+    public function about_us()
+    {
+        $this->db->where(array(
+                'page_id'      =>  23
+        ));
+        $data['about']  = $this->db->get('tbl_page')->row();
+        // echo '<pre>';
+        // print_r($data['about']); exit;
+
+
+        $this->load->view('web/lib/header',$data);
+        $this->load->view('page/page_details');
+        $this->load->view('web/lib/footer');
+    }
+
+
 }

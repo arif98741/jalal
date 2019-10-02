@@ -23,10 +23,10 @@
     <header id="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <nav class="navbar navbar-default">
                         <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                            <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> -->
                             <div id="logo">
                                 <a href="<?php echo base_url(); ?>"> <img src="<?php echo base_url(); ?>assets/front/img/logo.png" alt="logo of learn24bd" title="diu logo" style="height: 80px; width: 150px;"></a>
                             </div>
@@ -40,30 +40,47 @@
                                 <?php if($this->session->userdata('student') ): ?>
                                     <li class="hvr-underline-from-left"> <a title="Profile" href="<?php echo base_url(); ?>student/profile/<?php echo $this->session->student_username; ?>">Profile</a> </li>
 
-                                    <li class="hvr-underline-from-left"> <a title="Logout" href="<?php echo base_url(); ?>student/logout"><i class="fa fa-user"></i>&nbsp;Logout</a> </li>
+
 
                                     <?php else: ?>
 
-                                        <li class="hvr-underline-from-left"> <a title="Student" href="<?php echo base_url(); ?>student"><i class="fa fa-user"></i>&nbsp;Student</a> </li>
+
 
                                     <?php endif; ?>
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog/1"><i class="fa fa-newspaper-o"></i>&nbsp;Blog</a> </li>
+                                    
                                     <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>upload"><i class="fa fa-upload"></i>&nbsp;Upload</a> </li>
+
+                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>department">Department</a> </li>
+
+                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog/1"><i class="fa fa-newspaper-o"></i>&nbsp;Blog</a> </li>
                                 </ul>
+
+                                
                             </div>
+
+
                         </nav>
                     </div>
                     <!-- header menu end -->
-                    <div class="col-md-3 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                         <form class="search" action="#" method="GET">
                             <div class="input-group">
                                 <input autocomplete="off" name="query" required="required" type="text" class="form-control" placeholder="Search Here">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"> <i class="fa fa-search"></i> </button>
+                                    <button class="btn btn-default" type="submit" style="margin-bottom: 10px;"> <i class="fa fa-search"></i> </button>
+                                    <?php if($this->session->student): ?>
+                                        &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  
+                                        <img src="<?php echo base_url(); ?>uploads/student/<?php echo $this->session->student_image; ?>" style="width: 40px; height: 40px; border-radius: 100%; margin-left: 10px;" alt="">sdfsdfsdafsafsdafsda
+
+                                        <?php else: ?>
+
+                                            &nbsp; &nbsp; <span style="margin-left: 10px;"><a href="<?php echo base_url();  ?>student" class="btn btn-sm"><strong>Login</strong></a><span style="color:red !important;">/</span><a href="<?php echo base_url();  ?>student/register" class="btn btn-sm"><strong>Register</strong></a></span>
+
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>

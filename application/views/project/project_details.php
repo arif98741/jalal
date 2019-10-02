@@ -1,4 +1,4 @@
-
+<?php // echo sha1(md5('1'));; ?>
 <!--category-->
 <div class="container category_section" style="padding:20px 15px">
 
@@ -114,7 +114,7 @@ body {
 .profile-content {
   padding: 20px;
   background: #fff;
-  min-height: 2000px;
+  min-height: 1200px;
 }
 </style>
 <div class="row">
@@ -198,6 +198,48 @@ body {
         </div>
 
       <?php endif; ?>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Comment</h2>
+          <div class="form-group">
+            <?php echo form_open_multipart('project/save_comment'); ?>
+            <label for="">Enter your name</label>
+            <textarea name="comment" id="" cols="5" rows="5" class="form-control"></textarea>
+            <br>
+            <?php if($this->session->student): ?>
+              <input type="submit" class="btn btn-primary" value="Comment">
+              <input type="hidden" name="project_id" value="<?php echo $project->id; ?>">
+
+            </form>
+            <?php else: ?>
+              <h4>You must have to login to comment </h4>
+            <?php endif; ?>
+          </div>
+
+
+          <ul class="list-group">
+
+            <?php foreach ($comments as $comment) {?>
+
+              <li class="list-group-item"><img src="<?php echo base_url(); ?>uploads/student/<?php echo $comment->image; ?>" style="height: 50px; width: 50px;" alt="">
+                <ul style="list-style: none; display: inline-block;">
+                  <li><?php echo $comment->name; ?>  <span class="text-right" style="margin-left: 100px; font-size: 14px;"><?php echo date('h:i:sA d-m-Y',strtotime($comment->comment_time)) ?></span></li>
+                  <li><small><?php echo $comment->comment; ?></small></li>
+                </ul>
+
+              </li>
+
+            <?php } ?> 
+
+          </ul>
+
+
+        </div>
+
+        <br>
+
+      </div>
     </div>
   </div>
 </div>

@@ -22,6 +22,7 @@ $route['admin/logout'] 		  	= 'admin/logout';
 $route['student'] 		  	= 'web/student'; 
 $route['student/register'] 	= 'web/student/register'; 
 $route['student/profile/(:any)'] 	= 'web/student/profile/$1'; 
+$route['student/account_settings'] 	= 'web/student/account_settings'; 
 $route['student/logout'] 	= 'web/student/logout'; 
 $route['upload'] 		   = 'web/student/upload'; 
 
@@ -36,6 +37,11 @@ $route['project/view/(:any)'] 	= 'project/view/$1';
 $route['blog/(:num)'] 			= 'front/blog/$1';
 $route['blog/category/(:num)'] 	= 'front/blog_bycategory/$1';
 $route['blog/view/(:any)'] 		= 'front/blog_view/$1'; 
+$route['about-us'] 				= 'front/about_us'; 
+
+
+$route['department'] 					= 'project/department'; 
+$route['department_wise_project/(:num)/(:num)'] 	    = 'project/department_wise_project/$1/$2'; 
 
 
 

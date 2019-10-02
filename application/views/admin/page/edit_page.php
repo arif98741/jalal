@@ -12,7 +12,7 @@
 <?php endif; ?>   
 
 <div class="container-fluid">
-   <div class="page-header">
+ <div class="page-header">
     <div class="row align-items-end">
         <div class="col-lg-8">
             <div class="page-header-title">
@@ -43,14 +43,14 @@
         <div class="card">
             <div class="card-header"><h3>Edit Page</h3></div>
             <div class="card-body">
-               <!--  <form class="forms-sample"> -->
+             <!--  <form class="forms-sample"> -->
                 <?php echo form_open_multipart('admin/page/update_page/'.$page[0]->page_id, array('class'=>'forms-sample')); ?>
                 <div class="form-group">
                     <label for="exampleInputName1">Page Title</label>
                     <input type="text" name="page_title" value="<?php echo $page[0]->page_title; ?>" class="form-control" id="exampleInputName1" placeholder="Enter Page Tile ">
                 </div>
                 <div class="row">
-                   <div class="col-md-6">
+                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleSelectGender">Page Category</label>
                         
@@ -72,49 +72,36 @@
                 </div>
 
                 <div class="col-md-12">
-                 <div class="form-group">
+                   <div class="form-group">
                     <label for="exampleInputName1">Page Slug</label>
                     <input type="text" name="page_slug"  value="<?php echo $page[0]->page_slug; ?>"  placeholder="Example: php-learning-awesome" class="form-control">
                 </div>
             </div>
 
+            
             <div class="col-md-6">
-             <div class="form-group">
-                <label for="exampleInputName1">Post Tag</label>
-                <select name="tagid[]" class="form-control" id="tags-dropdown" multiple="multiple">
-                    <option>Select Tags</option>
-                    <?php foreach ($tags as $tag) { ?>
-                        <option value="<?php echo $tag->tagid; ?>"><?php echo  $tag->tag_name; ?></option>
-                    <?php       } ?>
-
+               <div class="form-group">
+                <label for="exampleInputName1">Post Status</label>
+                <select name="page_status" class="form-control">
+                    <option value="published" <?php if($page[0]->page_status == 'published'): ?> selected="" <?php  endif; ?>>Published</option>
+                    <option value="draft" <?php if($page[0]->page_status == 'draft'): ?> selected="" <?php  endif; ?>>Draft</option>
+                    <option value="pending" <?php if($page[0]->page_status == 'pending'): ?> selected="" <?php  endif; ?>>Pending</option>
 
                 </select>
             </div>
         </div>
 
-        <div class="col-md-6">
-         <div class="form-group">
-            <label for="exampleInputName1">Post Status</label>
-            <select name="page_status" class="form-control">
-                <option value="published" <?php if($page[0]->page_status == 'published'): ?> selected="" <?php  endif; ?>>Published</option>
-                <option value="draft" <?php if($page[0]->page_status == 'draft'): ?> selected="" <?php  endif; ?>>Draft</option>
-                <option value="pending" <?php if($page[0]->page_status == 'pending'): ?> selected="" <?php  endif; ?>>Pending</option>
-
-            </select>
-        </div>
     </div>
 
-</div>
-
-<div class="form-group">
-    <label for="exampleTextarea1">Post Details</label>
-    <textarea class="form-control" name="page_description" id="editor1" rows="4">
-        <?php echo $page[0]->page_description ; ?>
-    </textarea>
-</div>
-<button type="submit" class="btn btn-primary mr-2" >Submit</button>
-<button class="btn btn-light" onclick="return (confirm('are you sure to remove contents?'))">Cancel</button>
-<?php echo form_close(); ?>
+    <div class="form-group">
+        <label for="exampleTextarea1">Post Details</label>
+        <textarea class="form-control" name="page_description" id="editor1" rows="4">
+            <?php echo $page[0]->page_description ; ?>
+        </textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mr-2" >Submit</button>
+    <button class="btn btn-light" onclick="return (confirm('are you sure to remove contents?'))">Cancel</button>
+    <?php echo form_close(); ?>
 </div>
 </div>
 </div>
@@ -131,15 +118,15 @@
 <script src="<?php echo base_url();?>assets/admin/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 
 <script>
-   CKEDITOR.replace( 'editor1' );
-   $('#post_tag').tagsinput();
+ CKEDITOR.replace( 'editor1' );
+ $('#post_tag').tagsinput();
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
                    // $(document).ready(function() {
-                     $('#post-category-dropdown').select2();
-                     $('#tags-dropdown').select2({
+                       $('#post-category-dropdown').select2();
+                       $('#tags-dropdown').select2({
                         tags: true,
                         tokenSeparators: [',', ' ']
 

@@ -22,6 +22,7 @@
                             <th>Project ID</th>
                             <th>Author</th>
                             <th>Category</th>
+                            <th>Department</th>
                             <th>Uploaded On</th>
                             <th>Views</th>
                             <th>-</th>
@@ -38,6 +39,7 @@
                                     <td><?php echo $project->project_id; ?></td>
                                     <td><a href="<?php echo base_url().'student/profile/'.$project->username; ?>" class=""><?php echo $project->name; ?></a></td>
                                     <td><?php echo $project->category_name; ?></td>
+                                    <td><?php echo $project->department_name; ?></td>
                                     <td><?php echo date('d-m-Y',strtotime( $project->created_at)); ?></td>
 
                                     <td><?php echo $project->page_count; ?></td>
@@ -47,7 +49,7 @@
                                         <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id.'/'.$project->zip_file; ?>" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a>&nbsp;&nbsp; 
                                         <?php else: ?>
 
-                                            <a href="#" title="Login first to download files" class="btn btn-sm btn-success text-center" onclick="alert('You must have to login for downloading file.')"><i class="fa fa-download "></i></a>&nbsp;&nbsp; 
+                                            <a href="#" title="Login first to download files" class="btn btn-sm btn-success text-center workFunction" onclick="workFunction()"><i class="fa fa-download "></i></a>&nbsp;&nbsp; 
                                         <?php endif; ?>
 
                                         <a href="<?php echo base_url().'project/view/'.$project->project_id; ?>" class="btn btn-sm btn-primary text-center"><i class="fa fa-eye "></i></a></td>
@@ -80,6 +82,19 @@
                     </div>
                 </div>
                 <br> </div>
+
+                <script>
+                   // $(document).ready(function() {
+                    function workFunction()
+                    {
+                        alert('You must have to login for downloadin file');
+                        window.location = '<?php echo base_url(); ?>student/';
+                    }
+                        // $('.workFunction').click(function(event) {
+                           
+                        // });
+                    // });
+                </script>
                 <!--#category-->
                 <!--ad-->
 

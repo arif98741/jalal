@@ -20,7 +20,11 @@
                 <div>
                     <ul>
                         <li> <a title="Home" href="<?php echo base_url(); ?>">Home</a> </li>
-                        <li> <a title="Tutorial" href="<?php echo base_url(); ?>/blog">Blog</a> </li>
+                        <li> <a title="Tutorial" href="<?php echo base_url(); ?>about-us">About Us</a> </li>
+                        <li> <a title="Tutorial" href="<?php echo base_url(); ?>blog/1">Blog</a> </li>
+
+
+                        
                         
                     </ul>
                 </div>
@@ -29,7 +33,7 @@
                 <h3> Others </h3>
                 <div>
                     <ul>
-                        <li><a href="<?php echo base_url(); ?>faq">Faq</a></li>
+                        <li><a href="<?php echo base_url(); ?>faq">FAQ</a></li>
                         
                     </ul>
                 </div>
@@ -41,7 +45,7 @@
     <div class="container">
         <div class="row footer">
             <div class="col-md-4 col-xs-12">
-                <p class="footer-copy-text">Created, Modified By - Mirza Jalal , Mahabub Rahman, Ashraful Islam, Ariful Islam | <span class="sitename"><?php echo base_url(); ?></span> All rights Reserved;</p>
+                <p class="footer-copy-text">Created, Modified By - Mirza Jalal Uddin, Md. Mahabub Rahman, Ashraful Islam, Ariful Islam | <span class="sitename"><?php echo base_url(); ?></span> All rights Reserved;</p>
             </div>
             <!-- footer right -->
             <div class="col-md-4 col-xs-12 social_box pull-right">

@@ -138,8 +138,6 @@ class Page extends CI_Controller
         $this->db->order_by('category_title','asc');
         $data['categories'] = $this->db->get('tbl_page_category')->result_object(); 
 
-        $this->db->order_by('tag_name','asc');
-        $data['tags'] = $this->db->get('tbl_tag')->result_object(); 
 
         $this->db->where('page_id',$page_id);
         $data['page'] = $this->db->get('tbl_page')->result_object(); 

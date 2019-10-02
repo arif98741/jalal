@@ -32,18 +32,15 @@ class Project extends CI_Controller
         $previous_page      = $page_id - 1;
         $next_page          = $page_id + 1;
         $total_no_of_pages  = ceil($row / $perpage);
-        $this->db->select("projects.*,project_categories.category_name,students.name,students.username");
+        $this->db->select("projects.*,project_categories.category_name,students.name,students.username,departments.department_name");
         $this->db->join('project_categories','project_categories.id = projects.project_category_id');
+        $this->db->join('departments','departments.id = projects.department_id');
         $this->db->join('students','projects.author = students.id');
         $this->db->where('projects.status','published');
         $this->db->order_by('projects.id','desc');
         $this->db->limit($perpage,$offset);
         $query          = $this->db->get('projects');
-        
-        //$data['projects']  = $query->result(); 
-        //echo '<pre>';
-        //print_r($data['projects']);
-        //exit;
+      
         $data['projects']  = $query->result(); 
         $data['row']    = $row;
         $data['page']   = $page_id;
@@ -100,6 +97,17 @@ class Project extends CI_Controller
         if ($status->result_id->num_rows > 0) {
             $data['project'] = $status->row();
 
+            $this->db->select('students.name,students.image');
+            $this->db->select('comments.comment,comments.id as comment_id,comment_time');
+            $this->db->join('students','students.id = comments.student_id');
+            $this->db->join('projects','projects.id = comments.project_id');
+            $this->db->order_by('comments.id','desc');
+            $data['comments'] = $this->db->where(['comments.project_id' => $data['project']->id])->get('comments')->result_object();
+            //echo '<pre>';
+           // print_r($data['comments']); exit;
+
+
+
             $this->db->set('page_count',$data['project']->page_count+1);
             $this->db->where('project_id',$project_id)->update('projects');
             $this->load->view('web/lib/header',$data);
@@ -112,5 +120,87 @@ class Project extends CI_Controller
         }
 
     }
+
+    /*
+    !---------------------------
+    ! Save Comment 
+    !----------------------------------
+    */
+    public function save_comment()
+    {
+        if (!$this->session->has_userdata('student')) {
+            return false;
+        }
+
+        $data['project_id'] = $this->input->post('project_id');
+        $data['comment'] = $this->input->post('comment');
+        $data['student_id'] = $this->session->student_id;
+        $this->db->insert('comments',$data);
+
+        $project = $this->db->where('id',$data['project_id'])->get('projects')->row();
+        redirect(base_url().'project/view/'.$project->project_id);
+    }
+
+
+     /*
+     !--------------------------------------------------------
+     !      Project Department wise 
+     !--------------------------------------------------------
+     */
+     public function department()
+     {
+        $this->db->select('departments.department_name, count(projects.id) as total_project, departments.id');
+        $this->db->join('students','students.id = projects.author');
+        $this->db->join('departments','departments.id = projects.department_id');
+        $this->db->group_by('projects.department_id');
+        $this->db->order_by('projects.id','desc');
+        $data['departments']          = $this->db->get('projects')->result_object();
+
+        $this->load->view('web/lib/header',$data);
+        $this->load->view('project/project_department');
+        $this->load->view('web/lib/footer');
+        
+    }
+
+
+    /*
+     !--------------------------------------------------------
+     !       Project Department Wise
+     !--------------------------------------------------------
+     */
+     public function department_wise_project($department_id,$page_id=1)
+     {
+       
+        $row  = $this->db->get('projects')->num_rows();
+        $perpage = 10;
+        $offset = ($page_id-1) * $perpage;
+        $previous_page      = $page_id - 1;
+        $next_page          = $page_id + 1;
+        $total_no_of_pages  = ceil($row / $perpage);
+        $this->db->select("projects.*,project_categories.category_name,students.name,students.username,departments.department_name");
+        $this->db->join('project_categories','project_categories.id = projects.project_category_id');
+        $this->db->join('departments','departments.id = projects.department_id');
+        $this->db->join('students','projects.author = students.id');
+        $this->db->where('projects.status','published');
+        $this->db->where('projects.department_id',$department_id);
+        $this->db->order_by('projects.id','desc');
+        $this->db->limit($perpage,$offset);
+        $query          = $this->db->get('projects');
+      
+        $data['projects']  = $query->result(); 
+        $data['row']    = $row;
+        $data['page']   = $page_id;
+        $data['pages']  = (int)$total_no_of_pages;
+        $data['previous_page']  = $previous_page;
+        $data['next_page']      = $next_page;
+
+        $data['department'] = $this->db->where('id',$department_id)->get('departments')->row();
+
+        $this->load->view('web/lib/header',$data);
+        $this->load->view('project/project_department_list');
+        $this->load->view('web/lib/footer');
+        
+    }
+
 
 }

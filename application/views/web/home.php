@@ -52,7 +52,7 @@
                         <div class="icon"> <i class="fa fa-list fa-4x"></i> </div>
                         <div class="divider"></div>
                         <div class="content"> <a href="<?php echo base_url(); ?>project"><h2>Total Projects</h2></a>
-                            <p>2</p> <a href="#"><i class="fa fa-globe"></i> See all...</a> </div>
+                            <p><?php echo $total_project; ?></p> <a href="<?php echo base_url(); ?>project"><i class="fa fa-globe"></i> See all...</a> </div>
                         </div>
                         <!--#widget-->
                     </div>
@@ -62,7 +62,7 @@
                             <div class="icon"> <i class="fa fa-users fa-4x"></i> </div>
                             <div class="divider"></div>
                             <div class="content"> <a href="<?php echo base_url(); ?>author"><h2>Total Authors</h2></a>
-                                <p>32</p> <a href="#"><i class="fa fa-globe"></i> See all</a> </div>
+                                <p><?php echo $total_author; ?></p> <a href="#"><i class="fa fa-globe"></i> See all</a> </div>
                             </div>
                             <!--#widget-->
                         </div>
@@ -135,3 +135,5 @@
                             </div>
                             <br> </div>
                             <hr>
+
+                        

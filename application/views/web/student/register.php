@@ -47,8 +47,8 @@
                 <div class="col-md-offset-3 col-md-7">
                     <!--widget-->
                     <div class="dash_widget_1 dwc3">
-                        <div class="icon"> <i class="fa fa-user fa-3x"></i> 
-                           <br>Already have account? <a href="<?php echo base_url(); ?>student" style="color:#fff;">Login</a>
+                        <div class="icon"> <a href="<?php echo base_url(); ?>student" style="color:#fff;"><i class="fa fa-user fa-3x"></i> 
+                           <br>Already have account? Login</a>
 
                        </div>
                        <div class="divider"></div>
