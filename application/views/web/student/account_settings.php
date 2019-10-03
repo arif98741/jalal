@@ -125,7 +125,7 @@ body {
 
       <div class="profile-usermenu">
         <h2 class="text-center"><!-- <i class="fa fa-cog fa-3x text-center"></i> -->
-         <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/<?php echo $this->session->student_image; ?>" alt="">
+         <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/<?php echo $this->session->student_image; ?>" style="width: 150px; height: 150px;" alt="">
          </a>
          <br><?php echo $student->name; ?>
        </h2>

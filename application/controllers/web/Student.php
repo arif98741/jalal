@@ -245,7 +245,18 @@ class Student extends CI_Controller
         if ( $i==0 ) {
             $data['password'] = sha1(md5($data['password']));
             $this->db->insert('students',$data);
-            $this->session->set_flashdata('success', 'Successfully Loggedin');
+            $student = $this->db->order_by('id','desc')->limit(1)->get('students')->row();
+            $session  = array(
+                'student'              => true,
+                'student_id'           => $student->id,
+                'student_username'     => $student->username,
+                'student_email'        => $student->email,
+                'student_address'      => $student->address,
+                'student_status'       => $student->status,
+                'student_image'        => $student->image
+            );
+            $this->session->set_userdata($session);
+            $this->session->set_flashdata('success', 'Successfully Registered to system.');
             redirect('student/profile/'.$data['username']);
         }else
         {

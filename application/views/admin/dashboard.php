@@ -226,7 +226,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php//$i = 1; foreach ($posts as $post) { ?>
+                        <?php //$i = 1; foreach ($posts as $post) { ?>
                             <tr>
 
                                 <td><?php //echo $i;?></td>

@@ -127,45 +127,23 @@ body {
     <div class="profile-sidebar">
       <!-- SIDEBAR USERPIC -->
       <div class="profile-userpic">
-        <?php if($this->session->student): ?>
 
-          <?php if($this->session->student_image=='default.png'): ?>
+        <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/<?php echo $this->session->student_image; ?>" alt="">
+        </a>
 
-            <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/default/<?php echo $this->session->student_image; ?>" alt="">
-            </a>
-
-            <?php else: ?>
-
-             <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/<?php echo $this->session->student_image; ?>" alt="">
-             </a>
-           <?php endif; ?>
-
-
-           <?php else: ?>
-
-             <?php if($profile->image=='default.png'): ?>
-               <a href="#" class="w3-button " disabled><img src="<?php echo base_url();?>uploads/student/default/<?php echo $profile->image; ?>" alt=""></a>
-               <?php else: ?>
-                 <a href="#" class="w3-button " disabled><img src="<?php echo base_url();?>uploads/student/<?php echo $profile->image; ?>" alt=""></a>
-               <?php endif; ?>
-
-               
-
-             <?php endif; ?>
-
-           </div>
-           <!-- END SIDEBAR USERPIC -->
-           <!-- SIDEBAR USER TITLE -->
-           <div class="profile-usertitle">
-            <div class="profile-usertitle-name">
-             <?php echo $profile->name; ?>
-           </div>
-           <div class="profile-usertitle-job">
-            <?php echo $profile->designation; ?>
-          </div>
-        </div>
-        <!-- END SIDEBAR USER TITLE -->
-        <!-- SIDEBAR BUTTONS -->
+      </div>
+      <!-- END SIDEBAR USERPIC -->
+      <!-- SIDEBAR USER TITLE -->
+      <div class="profile-usertitle">
+        <div class="profile-usertitle-name">
+         <?php echo $profile->name; ?>
+       </div>
+       <div class="profile-usertitle-job">
+        <?php echo $profile->designation; ?>
+      </div>
+    </div>
+    <!-- END SIDEBAR USER TITLE -->
+    <!-- SIDEBAR BUTTONS -->
 
 
         <!-- <div class="profile-userbuttons">
@@ -196,7 +174,7 @@ body {
                 Upload Project </a>
               </li>
 
-               <li>
+              <li>
                 <a href="<?php echo base_url();?>web/student/logout">
                   <i class="fa fa-sign-out"></i>
                 Logout </a>
@@ -230,14 +208,14 @@ body {
     <div class="col-md-12">
       <table class="table table-bordered table-striped">
         <thead>
-          <th>SL</th>
-          <th>Project Name</th>
-          <th>Project ID</th>
-          <th>Category</th>
-          <th>Uploaded On</th>
-          <th>Status</th>
-          <th>Views</th>
-          <th>-</th>
+          <th width="5%">SL</th>
+          <th width="15%">Project Name</th>
+          <th width="15%">Project ID</th>
+          <th width="15%">Category</th>
+          <th width="15%">Uploaded On</th>
+          <th width="10%">Status</th>
+          <th width="10%">Views</th>
+          <th width="15%">-</th>
         </thead>
 
         <tbody>

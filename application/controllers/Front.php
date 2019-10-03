@@ -25,6 +25,7 @@ class Front extends CI_Controller
     */
     public function index()
     {
+
         $data['title'] = 'Homepage';
 
         $this->db->select('projects.*,project_categories.category_name');
@@ -35,8 +36,6 @@ class Front extends CI_Controller
         $data['total_project'] = $this->db->get('projects')->num_rows();
         $data['total_author'] = $this->db->get('students')->num_rows();
         $data['total_download'] = $this->db->get('students')->num_rows();
-
-        
 
         $this->load->view('web/lib/header',$data);
         $this->load->view('web/lib/hero',$data);
