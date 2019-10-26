@@ -125,10 +125,19 @@ body {
 
       <div class="profile-usermenu">
         <h2 class="text-center"><!-- <i class="fa fa-cog fa-3x text-center"></i> -->
-         <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/<?php echo $this->session->student_image; ?>" style="width: 150px; height: 150px;" alt="">
-         </a>
-         <br><?php echo $student->name; ?>
-       </h2>
+         <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button ">
+
+           <?php if(!empty($profile->image)) :?>
+            <img src="<?php echo base_url();?>uploads/student/<?php echo $profile->image; ?>" style="width: 150px; height: 150px; border-radius: 100%;" alt="">
+
+            <?php else: ?>
+              <img src="<?php echo base_url();?>uploads/student/default.png" style="width: 150px; height: 150px; border-radius: 100%;" alt="">
+
+            <?php endif; ?>
+
+          </a>
+          <br><?php echo $student->name; ?>
+        </h2>
 
        <!--  <ul class="nav">
           <li class="active">

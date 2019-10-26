@@ -88,7 +88,7 @@ class Project extends CI_Controller
      */
      public function view($project_id="")
      {
-        $this->db->select('projects.*,project_categories.category_name,students.name,students.username');
+        $this->db->select('projects.*,project_categories.category_name,students.name,students.username,students.image');
         $this->db->join('project_categories','projects.project_category_id = project_categories.id');
         $this->db->join('students','projects.author = students.id');
         $this->db->where(['project_id' => $project_id]);
@@ -103,13 +103,15 @@ class Project extends CI_Controller
             $this->db->join('projects','projects.id = comments.project_id');
             $this->db->order_by('comments.id','desc');
             $data['comments'] = $this->db->where(['comments.project_id' => $data['project']->id])->get('comments')->result_object();
-            //echo '<pre>';
-           // print_r($data['comments']); exit;
-
-
 
             $this->db->set('page_count',$data['project']->page_count+1);
             $this->db->where('project_id',$project_id)->update('projects');
+
+            $data['ratings'] = $this->db->select('rate')->where(['project_id' => $data['project']->id])->get('rating')->result_object();
+            $data['total_rating'] = 0;
+            foreach ($data['ratings'] as $value) {
+                $data['total_rating'] += $value->rate;
+            }
             $this->load->view('web/lib/header',$data);
             $this->load->view('project/project_details');
             $this->load->view('web/lib/footer');
@@ -138,8 +140,44 @@ class Project extends CI_Controller
         $this->db->insert('comments',$data);
 
         $project = $this->db->where('id',$data['project_id'])->get('projects')->row();
-        redirect(base_url().'project/view/'.$project->project_id);
+        redirect(base_url().'project/view/'.$project->project_id.'#rating-section');
     }
+
+     /*
+    !---------------------------
+    ! Save Rating
+    !----------------------------------
+    */
+    public function save_rating()
+    {
+        if (!$this->session->has_userdata('student')) {
+            return false;
+        }
+
+        $data['project_id'] = $this->input->post('project_id');
+        $data['rate']       = $this->input->post('rate');
+        $data['student_id'] = $this->session->student_id;
+        $project = $this->db->where('id',$data['project_id'])->get('projects')->row();
+        
+
+        $checkStatment = $this->db->where(array(
+            'project_id' => $data['project_id'],
+            'student_id' => $data['student_id']
+        ))->get('rating');
+        if ($checkStatment->result_id->num_rows > 0) {
+            $this->session->set_flashdata('error', '<span style="color: red;">You already given rating</span>');
+            redirect(base_url().'project/view/'.$project->project_id.'#rating-section');
+        }
+
+        if($this->db->insert('rating',$data))
+        {
+            $this->session->set_flashdata('error', '<span style="color: green;">You rating successfully saved.</span>');
+            redirect(base_url().'project/view/'.$project->project_id.'#rating-section');
+        }
+       
+    }
+
+    
 
 
      /*

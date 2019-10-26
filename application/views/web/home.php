@@ -99,41 +99,71 @@
                     <br>
                     <div class="container">
                         <div class="row">
+
                             <div class="col-md-12">
-                                <h3>Recent Uploaded Projects</h3>
+                                <h3>News Feed</h3>
                                 <hr>
                                 <!-- home page thum -->
                                 <div class="row">
-                                    <?php foreach($projects as $project){ ?>
-                                        <div class="col-md-3">
-                                            <!-- single-->
-                                            <div class="post_item">
-                                                <a href="<?php echo base_url(); ?>project/view/<?php echo $project->project_id; ?>">
 
-                                                    <?php if(!empty($project->thumbnail)): ?>
-                                                        <div class="features_image" style="background-image:url(<?php echo base_url(); ?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->thumbnail; ?>)"></div>
+                                    <?php foreach ($following_projects as $following_project) {?>
 
-                                                        <?php else: ?>
+                                        <div class="row">
+                                            <div class="col-md-12">
 
+                                                <?php if(!empty($following_project->image)): ?>
 
-                                                            <div class="features_image" style="background-image:url(<?php echo base_url(); ?>uploads/project/default.png)"></div>
-                                                        <?php endif; ?>
+                                                    <img src="<?php echo base_url(); ?>uploads/student/<?php echo $following_project->image; ?>" style="width: 40px; height: 40px; border-radius: 100%;" alt="">
+                                                    <?php else: ?>
 
-                                                        <h3 style="max-height: 36px;overflow: hidden;text-overflow: ellipsis;"><?php echo $project->project_title; ?></h3>
-                                                        <p class="post_info"><i class="fa fa-newspaper-o"></i> <?php echo $project->category_name; ?> &nbsp;&nbsp;&nbsp;  <i class="fa fa-clock-o"></i> <?php echo date('m d, Y',strtotime($project->created_at)); ?> </p>
-                                                    </a>
-                                                </div>
+                                                       <img src="<?php echo base_url(); ?>uploads/student/default.png" style="width: 40px; height: 40px; border-radius: 100%;" alt="">
+
+                                                   <?php endif; ?>
+
+                                                   <strong><?php echo  $following_project->name; ?></strong> uploaded <a href="<?php echo base_url(); ?>project/view/<?php echo  $following_project->project_id; ?>"><?php echo $following_project->project_title; ?></a>
+                                               </div> <br> 
+                                           </div>
+                                       <?php     } ?> 
+
+                                   </div>
+
+                                   <hr>
+
+                                   <div class="col-md-12">
+                                    <h3>Recent Uploaded Projects</h3>
+                                    <hr>
+                                    <!-- home page thum -->
+                                    <div class="row">
+                                        <?php foreach($projects as $project){ ?>
+                                            <div class="col-md-3">
                                                 <!-- single-->
-                                            </div>
-                                        <?php } ?>
+                                                <div class="post_item">
+                                                    <a href="<?php echo base_url(); ?>project/view/<?php echo $project->project_id; ?>">
+
+                                                        <?php if(!empty($project->thumbnail)): ?>
+                                                            <div class="features_image" style="background-image:url(<?php echo base_url(); ?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->thumbnail; ?>)"></div>
+
+                                                            <?php else: ?>
+
+
+                                                                <div class="features_image" style="background-image:url(<?php echo base_url(); ?>uploads/project/default.png)"></div>
+                                                            <?php endif; ?>
+
+                                                            <h3 style="max-height: 36px;overflow: hidden;text-overflow: ellipsis;"><?php echo $project->project_title; ?></h3>
+                                                            <p class="post_info"><i class="fa fa-newspaper-o"></i> <?php echo $project->category_name; ?> &nbsp;&nbsp;&nbsp;  <i class="fa fa-clock-o"></i> <?php echo date('m d, Y',strtotime($project->created_at)); ?> </p>
+                                                        </a>
+                                                    </div>
+                                                    <!-- single-->
+                                                </div>
+                                            <?php } ?>
 
 
 
+                                        </div>
+                                        <!-- end homepage thum -->
                                     </div>
-                                    <!-- end homepage thum -->
                                 </div>
-                            </div>
-                            <br> </div>
-                            <hr>
+                                <br> </div>
+                                <hr>
 
-                        
+

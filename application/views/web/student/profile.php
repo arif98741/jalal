@@ -128,13 +128,25 @@ body {
       <!-- SIDEBAR USERPIC -->
       <div class="profile-userpic">
 
-        <a href="#" onclick="document.getElementById('id01').style.display='block'" class="w3-button "><img src="<?php echo base_url();?>uploads/student/<?php echo $this->session->student_image; ?>" alt="">
-        </a>
+        <a href="#" <?php if($this->session->student && $this->session->student_id == $profile->id): ?> onclick="document.getElementById('id01').style.display='block'"  <?php endif; ?> class="w3-button ">
+          <?php if(!empty($profile->image)) :?>
 
-      </div>
-      <!-- END SIDEBAR USERPIC -->
-      <!-- SIDEBAR USER TITLE -->
-      <div class="profile-usertitle">
+            <img src="<?php echo base_url();?>uploads/student/<?php echo $profile->image; ?>" alt="">
+
+
+            <?php else: ?>
+             <img src="<?php echo base_url();?>uploads/student/default.png" alt="">
+
+           <?php endif; ?>
+
+
+         </a>
+
+
+       </div>
+       <!-- END SIDEBAR USERPIC -->
+       <!-- SIDEBAR USER TITLE -->
+       <div class="profile-usertitle">
         <div class="profile-usertitle-name">
          <?php echo $profile->name; ?>
        </div>
@@ -161,11 +173,11 @@ body {
                 <i class="fa fa-home"></i>
               Overview </a>
             </li>
-            <?php if($this->session->student) : ?>
+            <?php if($this->session->student && $this->session->student_id == $profile->id) : ?>
               <li>
                 <a href="<?php echo base_url();?>student/account_settings">
                   <i class="fa fa-cog"></i>
-                Account Settings </a>
+                Edit Profile </a>
               </li>
 
               <li>
@@ -174,21 +186,24 @@ body {
                 Upload Project </a>
               </li>
 
-              <li>
-                <a href="<?php echo base_url();?>web/student/logout">
-                  <i class="fa fa-sign-out"></i>
-                Logout </a>
-              </li>
+            <?php endif; ?>
+            <li>
+              <?php if(in_array($this->session->student_id, $followers)): ?>
+                <a href="<?php echo base_url();?>unfollow/<?php echo $profile->id; ?>">
+                  <i class="fa fa-handshake-o"></i>Following </a>
+                  <?php else: ?>
 
-              
+                    <?php if($this->session->student_id != $profile->id): ?>
 
-          <!-- 
-          <li>
-            <a href="#" target="_blank">
-              <i class="fa fa-list"></i>
-            Tasks </a>
-          </li> -->
-        <?php endif; ?>
+                      <a href="<?php echo base_url();?>follow/<?php echo $profile->id; ?>">
+                        <i class="fa fa-handshake-o"></i>Follow </a>
+
+                      <?php endif; ?>
+
+
+                    <?php endif; ?>
+                  </li>
+
        <!--  <li>
           <a href="#">
             <i class="fa fa-phone"></i>
@@ -234,82 +249,68 @@ body {
               <td><?php echo $project->page_count; ?></td>
               <td>
 
-                <?php if($this->session->student && $this->session->student_username == $profile->username): ?>
-                  <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->zip_file; ?>" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a> &nbsp;&nbsp; 
 
-                  <?php else : ?>
-                    <?php if($this->session->student): ?>
-                      <a href="<?php echo base_url();?>uploads/project/<?php echo $project->project_id; ?>/<?php echo $project->zip_file; ?>" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a> &nbsp;&nbsp; 
-
-                      <?php else: ?>
-                       <a href="#" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a> &nbsp;&nbsp; 
+                <a href="<?php echo base_url();?>download/<?php echo $project->project_id; ?>/" class="btn btn-sm btn-success text-center"><i class="fa fa-download "></i></a> &nbsp;&nbsp; 
 
 
-                     <?php endif; ?>
+                <a href="<?php echo base_url().'project/view/'.$project->project_id; ?>" class="btn btn-sm btn-primary text-center"><i class="fa fa-eye "></i></a></td>
+              </tr>
+              <?php  $i++; } ?>
+
+            </tbody>
 
 
-                   <?php endif; ?>
+          </table>
 
 
+          <nav aria-label="Page navigation example">
+            <span>You are viewing page <strong><?php echo $page; ?></strong> of total <?php echo $pages; ?> pages;</span>
+            <ul class="pagination">
+              <?php
+              if($page !=1 ): ?>
+                <li class="page-item"><a class="page-link" href="<?php echo base_url(); ?>project/<?php echo $previous_page; ?>">Previous</a></li>
+              <?php endif; ?>
 
-                   <a href="<?php echo base_url().'project/view/'.$project->project_id; ?>" class="btn btn-sm btn-primary text-center"><i class="fa fa-eye "></i></a></td>
-                 </tr>
-                 <?php  $i++; } ?>
+              <?php for($j = 1; $j<=$pages; $j++){ ?>
 
-               </tbody>
-
-
-             </table>
-
-
-             <nav aria-label="Page navigation example">
-              <span>You are viewing page <strong><?php echo $page; ?></strong> of total <?php echo $pages; ?> pages;</span>
-              <ul class="pagination">
-                <?php
-                if($page !=1 ): ?>
-                  <li class="page-item"><a class="page-link" href="<?php echo base_url(); ?>project/<?php echo $previous_page; ?>">Previous</a></li>
-                <?php endif; ?>
-
-                <?php for($j = 1; $j<=$pages; $j++){ ?>
-
-                  <li class="page-item <?php if($j  == $page): ?> active <?php endif; ?>"><a class="page-link" href="<?php echo base_url(); ?>project/<?php echo $j; ?>"><?php echo $j; ?></a></li>
-                <?php } ?>
-                <?php
-                if($page !=$pages ): ?>
-                  <li class="page-item"><a class="page-link" href="<?php echo base_url(); ?>project/<?php echo $next_page; ?>">Next</a></li>
-                <?php endif; ?>
-              </ul>
-            </nav>
-          </div>
+                <li class="page-item <?php if($j  == $page): ?> active <?php endif; ?>"><a class="page-link" href="<?php echo base_url(); ?>project/<?php echo $j; ?>"><?php echo $j; ?></a></li>
+              <?php } ?>
+              <?php
+              if($page !=$pages ): ?>
+                <li class="page-item"><a class="page-link" href="<?php echo base_url(); ?>project/<?php echo $next_page; ?>">Next</a></li>
+              <?php endif; ?>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
+  </div>
 
 
 
-    <!-- modal -->
-    <div class="w3-container">
+  <!-- modal -->
+  <div class="w3-container">
 
 
 
-      <div id="id01" class="w3-modal">
-        <div class="w3-modal-content" style="max-width: 400px;">
-          <?php echo form_open_multipart('web/student/upload_profile_pic', array('class'=>'forms-sample')); ?>
-          <div class="w3-container" >
-            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-            <div class="form-group">
-              <label for="">Change Profile Picture</label>
-              <input type="file" name="image" class="form-control">
-              <br>
-              <button type="submit" class="btn btn primary">Upload</button>
-            </div>
-          </div>
-          <form>
+    <div id="id01" class="w3-modal">
+      <div class="w3-modal-content" style="max-width: 400px;">
+        <?php echo form_open_multipart('web/student/upload_profile_pic', array('class'=>'forms-sample')); ?>
+        <div class="w3-container" >
+          <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <div class="form-group">
+            <label for="">Change Profile Picture</label>
+            <input type="file" name="image" class="form-control">
+            <br>
+            <button type="submit" class="btn btn primary">Upload</button>
           </div>
         </div>
+        <form>
+        </div>
       </div>
-      <!-- modal -->
-      <!--#category-->
-      <!--ad-->
+    </div>
+    <!-- modal -->
+    <!--#category-->
+    <!--ad-->
 
-      <!--#ad-->
+    <!--#ad-->

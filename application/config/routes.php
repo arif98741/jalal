@@ -38,6 +38,9 @@ $route['blog/(:num)'] 			= 'front/blog/$1';
 $route['blog/category/(:num)'] 	= 'front/blog_bycategory/$1';
 $route['blog/view/(:any)'] 		= 'front/blog_view/$1'; 
 $route['about-us'] 				= 'front/about_us'; 
+$route['download/(:any)'] 		= 'web/student/download/$1'; 
+$route['follow/(:num)'] 		= 'web/student/follow/$1'; 
+
 
 
 $route['department'] 					= 'project/department'; 

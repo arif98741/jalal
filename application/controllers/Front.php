@@ -26,12 +26,17 @@ class Front extends CI_Controller
     public function index()
     {
 
+        $data['following_projects'] = $this->newsfeedmodel->test();
+        // echo "<pre>";
+        // print_r($abc);
+        // exit
+
         $data['title'] = 'Homepage';
 
         $this->db->select('projects.*,project_categories.category_name');
         $this->db->join('project_categories','projects.project_category_id = project_categories.id');
         $this->db->where('status','published');
-        $data['projects'] = $this->db->order_by('projects.id','desc')->get('projects')->result_object();
+        $data['projects'] = $this->db->order_by('projects.id','desc')->limit(8)->get('projects')->result_object();
 
         $data['total_project'] = $this->db->get('projects')->num_rows();
         $data['total_author'] = $this->db->get('students')->num_rows();

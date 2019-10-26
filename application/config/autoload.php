@@ -13,4 +13,4 @@ $autoload['config'] = array();
 
 $autoload['language'] = array();
 
-$autoload['model'] = array('countermodel','blogmodel','postmodel');
+$autoload['model'] = array('countermodel','blogmodel','postmodel','newsfeedmodel');

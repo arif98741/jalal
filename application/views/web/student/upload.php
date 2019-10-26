@@ -151,6 +151,13 @@ body {
 
     <p class="alert alert-success"><?php echo $this->session->success;  ?></p>
   <?php  endif; ?>
+
+  <?php if($this->session->error): ?>
+
+    <p class="alert alert-warning"><?php echo $this->session->error;  ?></p>
+  <?php  endif; ?>
+
+  
   <?php echo form_open_multipart('web/student/upload_project'); ?>
   <div class="profile-content">
     <div class="col-md-12">

@@ -39,48 +39,50 @@
                                 
                                 <?php if($this->session->userdata('student') ): ?>
                                     <li class="hvr-underline-from-left"> <a title="Profile" href="<?php echo base_url(); ?>student/profile/<?php echo $this->session->student_username; ?>">Profile</a> </li>
+                                <?php endif; ?>
+
+                                <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>upload"><i class="fa fa-upload"></i>&nbsp;Upload</a> </li>
+
+                                <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>department">Department</a> </li>
+                                <?php if($this->session->userdata('student') ): ?>
+                                    <li class="hvr-underline-from-left"> <a title="Click to logout" href="<?php echo base_url(); ?>student/logout"><i class="fa fa-sign-out"></i>&nbsp;</a> </li>
 
 
+
+                                    <?php else: ?> 
+
+
+                                        <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog/1"><i class="fa fa-newspaper"></i>&nbsp;Blog</a> </li>
+
+                                  <?php endif; ?>
+                              </ul>
+
+
+                          </div>
+
+
+                      </nav>
+                  </div>
+                  <!-- header menu end -->
+                  <div class="col-md-4 col-xs-12">
+                    <form class="search" action="#" method="GET">
+                        <div class="input-group">
+                            <input autocomplete="off" name="query" required="required" type="text" class="form-control" placeholder="Search Here">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit" style="margin-bottom: 10px;"> <i class="fa fa-search"></i> </button>
+                                <?php if($this->session->student): ?>
+                                    &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  
+                                    <img src="<?php echo base_url(); ?>uploads/student/<?php echo $this->session->student_image; ?>" style="width: 40px; height: 40px; border-radius: 100%; margin-left: 10px;" alt="">sdfsdfsdafsafsdafsda
 
                                     <?php else: ?>
 
-
+                                        &nbsp; &nbsp; <span style="margin-left: 10px;"><a href="<?php echo base_url();  ?>student" class="btn btn-sm"><strong>Login</strong></a><span style="color:red !important;">/</span><a href="<?php echo base_url();  ?>student/register" class="btn btn-sm"><strong>Register</strong></a></span>
 
                                     <?php endif; ?>
-                                    
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>upload"><i class="fa fa-upload"></i>&nbsp;Upload</a> </li>
-
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>department">Department</a> </li>
-
-                                    <li class="hvr-underline-from-left"> <a title="Blog" href="<?php echo base_url(); ?>blog/1"><i class="fa fa-newspaper-o"></i>&nbsp;Blog</a> </li>
-                                </ul>
-
-                                
-                            </div>
-
-
-                        </nav>
-                    </div>
-                    <!-- header menu end -->
-                    <div class="col-md-4 col-xs-12">
-                        <form class="search" action="#" method="GET">
-                            <div class="input-group">
-                                <input autocomplete="off" name="query" required="required" type="text" class="form-control" placeholder="Search Here">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit" style="margin-bottom: 10px;"> <i class="fa fa-search"></i> </button>
-                                    <?php if($this->session->student): ?>
-                                        &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  
-                                        <img src="<?php echo base_url(); ?>uploads/student/<?php echo $this->session->student_image; ?>" style="width: 40px; height: 40px; border-radius: 100%; margin-left: 10px;" alt="">sdfsdfsdafsafsdafsda
-
-                                        <?php else: ?>
-
-                                            &nbsp; &nbsp; <span style="margin-left: 10px;"><a href="<?php echo base_url();  ?>student" class="btn btn-sm"><strong>Login</strong></a><span style="color:red !important;">/</span><a href="<?php echo base_url();  ?>student/register" class="btn btn-sm"><strong>Register</strong></a></span>
-
-                                        <?php endif; ?>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>

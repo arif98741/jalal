@@ -17,6 +17,9 @@ class Student extends CI_Controller
         parent::__construct();
         $this->load->library('session');
         $this->load->helper('security');
+        $this->load->library('upload');
+        $this->load->library('zip');
+        //$this->load->library('download');
 
     }
 
@@ -114,7 +117,20 @@ class Student extends CI_Controller
             $data['page']   =  1;
             $data['pages']   =  $total_no_of_pages ;
             $data['next_page']   =  $page_id+1 ;
+            
 
+
+            $this->db->select("student_id");
+            $new = $this->db->where('following',$data['profile']->id )->get('follower')->result_object();
+
+            // 
+
+            //print_r($new);
+
+            $data['followers'] = [];
+            foreach ($new as $value) {
+                array_push($data['followers'], $value->student_id);
+            }
             $this->load->view('web/lib/header',$data);
             $this->load->view('web/student/profile');
             $this->load->view('web/lib/footer');
@@ -126,6 +142,64 @@ class Student extends CI_Controller
 
     }
 
+    /*
+     !--------------------------------------------------------
+     !      Student Profile
+     !--------------------------------------------------------
+     */
+     public function edit_profile()
+     {
+        if (!$this->session->student)
+        {
+            $this->session->set_flashdata('error', 'You must have to login first to upload project');
+            redirect('student');
+        }
+
+        $data['student']= $this->db->where('username',$this->session->student_username)->get('students')->row();
+       
+        $this->load->view('web/lib/header',$data);
+        $this->load->view('web/student/edit_profile');
+        $this->load->view('web/lib/footer');
+        
+    }
+
+
+    /*
+    !--------------------------------------------------------
+    !      Student Profile
+    !--------------------------------------------------------
+    */
+    public function update_profile_action()
+    {
+        if (!$this->session->student)
+        {
+            $this->session->set_flashdata('error', 'You must have to login first to upload project');
+            redirect('student');
+        }
+
+
+        $data['student_id'] = $this->input->post('student_id');
+        $data['name'] = $this->input->post('name');
+        $data['username'] = $this->input->post('username');
+        $data['email'] = $this->input->post('email');
+        if (!empty( $this->input->post('password'))) {
+            $data['password']  = $this->input->post('password');
+            $data['password'] = sha1(md5($data['password']));
+        }
+
+        $this->db->set($data);
+        $this->db->where('id',$this->session->student_id);
+        if ($this->db->update('students'))
+        {
+            $this->session->set_flashdata('success', 'Profile Updated Successful');
+            redirect(base_url().'student/profile/'.$this->session->student_username);
+        }else{
+            $this->session->set_flashdata('error', 'You must have to login first to upload project');
+            redirect(base_url().'student/profile/'.$this->session->student_username);
+        }
+        
+    }
+    
     /*
      !--------------------------------------------------------
      !      Student Upload Page
@@ -164,9 +238,16 @@ class Student extends CI_Controller
             redirect('student');
         }
 
-        $statement     = $this->db->order_by('id','desc')->limit(1)->get('projects');
+        $checkstatment = $this->db->where('project_title',$this->input->post('project_title'))->get('projects');
+        if ($checkstatment->result_id->num_rows > 0) {
+            
+            $this->session->set_flashdata('error', 'Project already exist! Check another title.');
+            redirect('upload');
+        }
 
-        if (empty($statement)) {
+
+        $statement     = $this->db->order_by('id','desc')->limit(1)->get('projects');
+        if ($statement->result_id->num_rows == 0) {
             $data['project_id'] =  str_pad(1,8,0,STR_PAD_LEFT); 
         }else{
             $row = $statement->row();
@@ -190,6 +271,10 @@ class Student extends CI_Controller
 
         if (!file_exists('uploads/project/'.$data['project_id'])) {
             mkdir('./uploads/project/'.$data['project_id'], 0777, TRUE);
+            $this->upload_thumbnail($data['project_id']);
+            $this->upload_flowchart($data['project_id']);
+            $this->upload_report($data['project_id']);
+            $this->upload_zip($data['project_id']);
         }
         redirect(base_url().'student/profile/'.$this->session->student_username,'refresh');
 
@@ -220,6 +305,7 @@ class Student extends CI_Controller
         $data['student_id'] = $this->input->post('student_id');
         $data['name'] = $this->input->post('name');
         $data['username'] = $this->input->post('username');
+        $data['email'] = $this->input->post('email');
         $data['password']  = $this->input->post('password');
         $i = 0;
 
@@ -229,11 +315,19 @@ class Student extends CI_Controller
             $i++;
         }
 
+        if( $this->db->where('email',$data['email'])->get('students')->num_rows() > 0)
+        {
+            $this->session->set_flashdata('email', 'Email already exist. Choose another');
+            $i++;
+        }
+
         if( $this->db->where('username',$data['username'])->get('students')->num_rows() > 0)
         {
             $this->session->set_flashdata('username', 'Username already exist. Choose another');
             $i++;
         }
+
+        
 
         if( strlen($data['password']) < 6)
         {
@@ -282,9 +376,9 @@ class Student extends CI_Controller
             $config['max_height']    = 10000;
             $config['file_name']     = 'thumbnail';
             $file_name               = $config['file_name'].$project_id.'.jpg'; //thumb image as .jpg format
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
 
+            
+            $this->upload->initialize($config);
             $obj = new Image;
             $img = $obj->make($_FILES['thumbnail']['tmp_name']);
             $img->save('uploads/project/'.$project_id.'/'.$file_name);
@@ -315,7 +409,7 @@ class Student extends CI_Controller
             $config['max_height']    = 10000;
             $config['file_name']     = 'flowchart';
             $file_name               = $config['file_name'].$project_id.'.jpg'; //thumb image as .jpg format
-            $this->load->library('upload', $config);
+            
             $this->upload->initialize($config);
 
             $obj = new Image;
@@ -337,20 +431,20 @@ class Student extends CI_Controller
      */
      public function upload_report($project_id)
      {
-        if (!empty($_FILES['report']['name'])) {
+        
+        $config['upload_path'] = './uploads/project/'.$project_id.'/';
+        $config['allowed_types'] = 'docx|doc|xlxs|pdf|PDF';
+        $this->upload->initialize($config);
 
-            $config['upload_path'] = './uploads/project/'.$project_id.'/';
-            $config['allowed_types'] = 'docx|doc|xlxs|pdf|PDF';
-            $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('report')) {
-                $upload_data = array('upload_data' => $this->upload->data());
-                $data['report'] = $upload_data['upload_data']['file_name'];
-                $this->db->set(['report'=>$data['report']]);
-                $this->db->where('project_id',$project_id);
-                $this->db->update('projects');   
-            } 
-        }
+        if ($this->upload->do_upload('report')) {
+           
+            $upload_data = array('upload_data' => $this->upload->data());
+            $data['report'] = $upload_data['upload_data']['file_name'];
+            $this->db->set(['report'=>$data['report']]);
+            $this->db->where('project_id',$project_id);
+            $this->db->update('projects');   
+        } 
+        
     }
 
       /*
@@ -364,7 +458,7 @@ class Student extends CI_Controller
 
             $config['upload_path'] = './uploads/project/'.$project_id.'/';
             $config['allowed_types'] = 'zip|rar|tar|pdf|PDF|ZIP|RAR|TAR';
-            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
 
             if ($this->upload->do_upload('zip_file')) {
                 $upload_data = array('upload_data' => $this->upload->data());
@@ -396,6 +490,7 @@ class Student extends CI_Controller
             $config['allowed_types'] = 'jpg|JPG|JPEG|jpeg|PNG|png';
             $config['file_name'] = time();
             $this->load->library('upload', $config);
+            $this->upload->initialize($config);
 
             if ($this->upload->do_upload('image')) {
                 $upload_data = array('upload_data' => $this->upload->data());
@@ -423,11 +518,11 @@ class Student extends CI_Controller
             redirect('student');
         }
 
-        $status   = $this->db->where(['username' => $this->session->student_username])->get('students');
-        $data['departments']   = $this->db->get('departments')->result_object();
-        $data['student']   = $this->db->where(['student_id'=>$this->session->student_id])->get('students')->row();
-        // echo '<pre>';
-        // print_r($status); exit;
+        $status                 = $this->db->where(['username' => $this->session->student_username])->get('students');
+        $data['departments']    = $this->db->get('departments')->result_object();
+        $data['student']        = $this->db->where(['id'=>$this->session->student_id])->get('students')->row();
+        //echo '<pre>';
+        //print_r( $data['student'] ); exit;
 
 
         $this->load->view('web/lib/header',$data);
@@ -462,8 +557,53 @@ class Student extends CI_Controller
         redirect('student/profile/'.$this->session->student_username);
     }
 
-    
+     /*
+     !--------------------------------------------------------
+     !     ABC
+     !--------------------------------------------------------
+     */
+     public function download($project_id="")
+     {
+        $this->load->helper('directory');
+        $files = directory_map('uploads/project/'.$project_id);
+        $path = base_url().'uploads/project/'.$project_id.'/';
+        $project = $this->db->select('project_title')->get('projects')->row();
+        $filename = $project->project_title.".zip";
+       
+        foreach ($files  as $file) {
+           $this->zip->read_file(FCPATH.'/uploads/project/'.$project_id.'/'.$file); 
+        }
+        //$this->zip->archive(FCPATH.'/archivefiles/'.$filename);
+        $this->zip->download($filename);
 
+
+    }
+
+    /*
+     !--------------------------------------------------------
+     !    Follow
+     !--------------------------------------------------------
+     */
+     public function follow($following)
+     {
+
+        if (!$this->session->has_userdata('student')) {
+            redirect('/');
+        }
+
+        $student = $this->db->where('id',$following)->get('students')->row();
+
+
+        $data = array('following' => $following, 'student_id' => $this->session->student_id);
+        if ($this->db->insert('follower',$data)) {
+
+            $this->session->set_flashdata('success', 'You have started following to <strong>'.$student->name.'</strong>');
+            redirect('student/profile/'.$student->username);
+        }else{
+            $this->session->set_flashdata('error', 'Unexpected error occours. Please try again');
+            redirect('student/profile/'.$student->username);
+        }
+    }
 
 
      /*

@@ -44,30 +44,25 @@
                 }
             </style>
             <div class="row">
-                <div class="col-md-offset-3 col-md-7">
+                <div class="col-md-12">
                     <!--widget-->
                     <div class="dash_widget_1 dwc3">
-                        <div class="icon"> <a href="<?php echo base_url(); ?>student" style="color:#fff;"><i class="fa fa-user fa-3x"></i> 
-                           <br>Already have account? Login</a>
 
-                       </div>
-                       <div class="divider"></div>
+                     <div class="divider"></div>
 
-                       <div class="content"> <a href="#"><h2><i class="fa fa-user-plus"></i>&nbsp;Student Registration</h2></a>
+                     <div class="content"> <a href="#"><h2><i class="fa fa-pencil"></i>&nbsp;Update Profile</h2></a>
 
                         <!-- home page thum -->
-                        <?php echo form_open_multipart('web/student/register_action', array('class'=>'forms-sample')); ?>
+                        <?php echo form_open('web/student/update_profile_action', array('class'=>'forms-sample')); ?>
                         <label for="">Student ID</label>
-                        <input type="text" name="student_id" class="form-control" placeholder="Enter your student id here" required="">
-                        <?php if($this->session->student_id): ?>
-                            <p style="color: red;"><?php echo $this->session->student_id;  ?></p>
-                        <?php  endif; ?>
+                        <input type="text" name="student_id" value="<?php echo $student->student_id; ?>"   class="form-control" placeholder="Enter your student id here" required="" readonly>
+                        
 
                         <br><label for="">Name</label>
-                        <input type="text" name="name" class="form-control" <?php if($this->session->name): ?> value="<?php echo $this->session->name; ?>" <?php endif; ?> placeholder="Enter your name here" required=""><br>
+                        <input type="text" name="name" class="form-control" value="<?php echo $student->name; ?>"  placeholder="Enter your name here" required=""><br>
 
                         <label for="">Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="Enter username" required="">
+                        <input type="text" name="username" value="<?php echo $student->username; ?>"   class="form-control" placeholder="Enter username" required="">
 
                         <?php if($this->session->username): ?>
                             <p style="color: red;"><?php echo $this->session->username;  ?></p>
@@ -75,25 +70,24 @@
 
 
                         <br><label for="">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter your Email" required="">
+                        <input type="email" name="email" value="<?php echo $student->email; ?>"   class="form-control" placeholder="Enter your Email" required="">
                         <br><label for="">Password</label>
-                        <input type="text" name="password" class="form-control" placeholder="Enter your password" required="">
-
-
-                        
+                        <input type="text" name="password" class="form-control" placeholder="Enter your password" >
 
                         <?php 
                         if ($this->session->error) { ?>
                             <p class="" style="color: red;"><?php echo $this->session->error; ?></p>
                         <?php } ?>
 
-                       <?php if($this->session->password): ?>
+                        <?php if($this->session->password): ?>
                             <p style="color: red;"><?php echo $this->session->password;  ?></p>
                         <?php  endif; ?>
 
                         <br>
-                        <button type="submit" name="login" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Register</button>
+                       
+                        <button onclick="window.location='<?php echo base_url(); ?>student/profile/<?php echo $this->session->student_username;?>'" class="btn btn-primary"><i class="fa fa-refresh"></i>&nbsp;back</button>
 
+                        <button type="submit" name="login" class="btn btn-success"><i class="fa fa-save"></i>&nbsp;Update</button>
                     </form>
 
                 </div>
